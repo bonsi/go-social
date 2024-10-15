@@ -35,3 +35,38 @@ Resources:
 - Maps: <https://youtu.be/999h-iyp4Hw?si=fPLtWRs7DWIVBIk->
 - Pointers: <https://youtu.be/DVNOP1LE3Mg?si=KXaKeHeIipjLg1HZ>
 - Goroutines & Channels: <https://youtu.be/3QESpVGiiB8?si=kqpETtKp73Abyiyw>
+
+## Section 2: Project Architecture
+
+### 6. Design Principles for a REST API
+
+- <https://12factor.net/>
+- "Roy Fielding - REST dissertation", see `./resources/fielding_dissertation.pdf`
+- <https://martinfowler.com/articles/richardsonMaturityModel.html>
+
+## Section 3: Building a server from TCP to HTTP
+
+### 7. TCP Server - net package
+
+- <https://pkg.go.dev/net>
+
+### 8. Understanding Routing
+
+### 9. HTTP Server - The net/http package
+
+### 10. Encoding & Decoding JSON Requests
+
+## Section 4: Scaffolding our API Server
+
+### 11. Setting up your Development Environment
+
+- Complete backend API in Golang (JWT, MySQL & Tests): <https://www.youtube.com/watch?v=7VLmLOiQ3ck>
+
+```sh
+mkdir social
+cd social
+
+go mod init github.com/bonsi/social
+
+mkdir -p {bin,cmd/migrate/migrations,cmd/api,docs,internal,scripts,web}
+```
