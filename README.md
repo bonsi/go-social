@@ -80,5 +80,8 @@ mkdir -p {bin,cmd/migrate/migrations,cmd/api,docs,internal,scripts,web}
 ```sh
 cd social
 go get -u github.com/go-chi/chi/v5
-
 ```
+
+### 14. Hot Reloading in Go
+
+- <https://github.com/air-verse/air>
