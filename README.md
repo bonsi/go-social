@@ -70,3 +70,15 @@ go mod init github.com/bonsi/social
 
 mkdir -p {bin,cmd/migrate/migrations,cmd/api,docs,internal,scripts,web}
 ```
+
+### 12. Clean Layered Architecture
+
+- <https://www.amazon.com/Clean-Architecture-Craftsmans-Software-Structure/dp/0134494164>
+
+### 13. Setting up the HTTP server and API
+
+```sh
+cd social
+go get -u github.com/go-chi/chi/v5
+
+```
