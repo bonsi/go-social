@@ -85,3 +85,20 @@ go get -u github.com/go-chi/chi/v5
 ### 14. Hot Reloading in Go
 
 - <https://github.com/air-verse/air>
+
+### 15. Environment Variables
+
+- Go-specific package: <https://github.com/joho/godotenv>
+- Generic CLI tool: <https://direnv.net/>
+
+- <https://12factor.net/config>
+
+```sh
+# direnv is automatically loaded from ~/.zshrc
+
+cd social
+
+# allow direnv to read our .envrc
+# NOTE: we need to do this again every time we change .envrc
+direnv allow .
+```

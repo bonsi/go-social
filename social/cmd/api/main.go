@@ -1,10 +1,14 @@
 package main
 
-import "log"
+import (
+	"log"
+
+	"github.com/bonsi/social/internal/env"
+)
 
 func main() {
 	cfg := config{
-		addr: ":8888",
+		addr: env.GetString("ADDR", ":8888"),
 	}
 
 	app := &application{
