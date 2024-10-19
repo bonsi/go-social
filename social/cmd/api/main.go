@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/bonsi/social/internal/env"
+	"github.com/bonsi/social/internal/store"
 )
 
 func main() {
@@ -11,8 +12,11 @@ func main() {
 		addr: env.GetString("ADDR", ":8888"),
 	}
 
+	store := store.NewPostgresStorage(nil)
+
 	app := &application{
 		config: cfg,
+		store:  store,
 	}
 
 	mux := app.mount()

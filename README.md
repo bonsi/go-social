@@ -102,3 +102,11 @@ cd social
 # NOTE: we need to do this again every time we change .envrc
 direnv allow .
 ```
+
+## Section 5: Databases
+
+### 16. The Repository Pattern
+
+- <https://threedots.tech/post/repository-pattern-in-go/>
+
+### 17. Implementing the Repository Pattern
