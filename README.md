@@ -110,3 +110,14 @@ direnv allow .
 - <https://threedots.tech/post/repository-pattern-in-go/>
 
 ### 17. Implementing the Repository Pattern
+
+### 18. Persisting data with SQL
+
+Some ORM suggestions if we do not want to use the Go standard lib below (lib/pq):
+
+- <https://github.com/jmoiron/sqlx>
+- <https://github.com/volatiletech/sqlboiler>
+
+```sh
+go get github.com/lib/pq
+```
