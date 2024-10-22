@@ -121,3 +121,9 @@ Some ORM suggestions if we do not want to use the Go standard lib below (lib/pq)
 ```sh
 go get github.com/lib/pq
 ```
+
+### 19. Configuring the DB Connection Pool
+
+```sh
+docker compose up
+```
