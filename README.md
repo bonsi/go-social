@@ -127,3 +127,29 @@ go get github.com/lib/pq
 ```sh
 docker compose up
 ```
+
+### 20. SQL Migrations
+
+- <https://github.com/golang-migrate/migrate/tree/master/cmd/migrate>
+- <https://www.postgresql.org/docs/current/citext.html>
+- <https://www.gnu.org/software/make/manual/make.html>
+
+```sh
+cd social
+
+# create empty migrations files (up & down)
+migrate create -seq -ext sql -dir ./cmd/migrate/migrations create_users
+
+# migrate
+migrate -path=./cmd/migrate/migrations -database="postgres://postgres:password@localhost/socialnetwork?sslmode=disable" up
+```
+
+These commands in a Makefile:
+
+```sh
+make migration posts_create
+
+make migration add_users_fk_to_posts_table
+
+make migrate-up
+```

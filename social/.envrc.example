@@ -1,1 +1,2 @@
 export ADDR=":8888"
+export DB_ADDR="postgres://USERNAME:PASSWORD@HOST/DBNAME?sslmode=disable"
