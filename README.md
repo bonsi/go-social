@@ -173,3 +173,5 @@ make migrate-up
 - POST request to `http://localhost:8888/v1/posts` using Insomnia fails
 - FK error, manually insert user using SQL for now
 - creating a post now works
+
+### 23. Getting a Post From a User
