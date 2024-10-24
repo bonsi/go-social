@@ -153,3 +153,11 @@ make migration add_users_fk_to_posts_table
 
 make migrate-up
 ```
+
+## Section 6: Posts CRUD
+
+### 21. Marshalling JSON responses
+
+```sh
+curl http://localhost:8888/v1/health -v
+```
