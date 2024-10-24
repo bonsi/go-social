@@ -161,3 +161,15 @@ make migrate-up
 ```sh
 curl http://localhost:8888/v1/health -v
 ```
+
+### 22. Creating a User Feed Post
+
+```sh
+make migration alter_posts_with_tags_updated
+
+make migrate-up
+```
+
+- POST request to `http://localhost:8888/v1/posts` using Insomnia fails
+- FK error, manually insert user using SQL for now
+- creating a post now works
