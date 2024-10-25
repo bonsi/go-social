@@ -177,3 +177,11 @@ make migrate-up
 ### 23. Getting a Post From a User
 
 ### 24. Internal Errors Package
+
+### 25. HTTP Payload Validation
+
+- <https://github.com/go-playground/validator>
+
+```sh
+go get github.com/go-playground/validator/v10
+```
