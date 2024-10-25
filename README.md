@@ -175,3 +175,5 @@ make migrate-up
 - creating a post now works
 
 ### 23. Getting a Post From a User
+
+### 24. Internal Errors Package
