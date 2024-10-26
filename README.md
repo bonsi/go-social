@@ -185,3 +185,19 @@ make migrate-up
 ```sh
 go get github.com/go-playground/validator/v10
 ```
+
+### 25. HTTP Payload Validation
+
+### 26. DB Relationships & SQL Joins
+
+- <https://www.dataquest.io/blog/sql-joins/>
+- SQL Cheatsheet: ./resources/DB+Relationships+SQL+Joins+Backend+Engineering+with+Go.jpg
+
+  ![SQL Cheatsheet](./resources/DB+Relationships+SQL+Joins+Backend+Engineering+with+Go.jpg)
+
+### 27. Adding Comments to Posts
+
+```sh
+cd social
+make migration add_comments
+```
