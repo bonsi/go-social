@@ -201,3 +201,5 @@ go get github.com/go-playground/validator/v10
 cd social
 make migration add_comments
 ```
+
+### 28. Updating and Deleting Posts
