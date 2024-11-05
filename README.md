@@ -186,8 +186,6 @@ make migrate-up
 go get github.com/go-playground/validator/v10
 ```
 
-### 25. HTTP Payload Validation
-
 ### 26. DB Relationships & SQL Joins
 
 - <https://www.dataquest.io/blog/sql-joins/>
@@ -205,3 +203,13 @@ make migration add_comments
 ### 28. Updating and Deleting Posts
 
 ### 29. Standardising JSON Responses
+
+### 30. Optimistic Concurrency Control
+
+- <https://cult.honeypot.io/reads/optimistic-vs-pessimistic-concurrency/>
+
+```sh
+make migration add_version_to_posts
+# ...
+make migrate-up
+```

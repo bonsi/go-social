@@ -16,6 +16,7 @@ type Post struct {
 	Tags      []string  `json:"tags"`
 	CreatedAt string    `json:"created_at"`
 	UpdatedAt string    `json:"updated_at"`
+	Version   int       `json:"version"`
 	Comments  []Comment `json:"comments"`
 }
 
@@ -50,7 +51,7 @@ func (s *PostgresPostStore) Create(ctx context.Context, post *Post) error {
 func (s *PostgresPostStore) GetByID(ctx context.Context, postID int64) (*Post, error) {
 	var post Post
 	query := `
-		SELECT id, title, content, tags, user_id, created_at, updated_at
+		SELECT id, title, content, tags, user_id, created_at, updated_at, version
 		FROM posts
 		WHERE id = $1
 	`
@@ -62,6 +63,7 @@ func (s *PostgresPostStore) GetByID(ctx context.Context, postID int64) (*Post, e
 		&post.UserID,
 		&post.CreatedAt,
 		&post.UpdatedAt,
+		&post.Version,
 	)
 	if err != nil {
 		switch {
@@ -99,9 +101,9 @@ func (s *PostgresPostStore) DeleteByID(ctx context.Context, postID int64) error 
 func (s *PostgresPostStore) Update(ctx context.Context, post *Post) error {
 	query := `
 		UPDATE posts
-		SET content =$1, title = $2, tags = $3, updated_at = NOW()
-		WHERE id = $4
-		RETURNING id, created_at, updated_at
+		SET content = $1, title = $2, tags = $3, version = version + 1, updated_at = NOW()
+		WHERE id = $4 AND version = $5
+		RETURNING version
 	`
 
 	err := s.db.QueryRowContext(ctx, query,
@@ -109,13 +111,17 @@ func (s *PostgresPostStore) Update(ctx context.Context, post *Post) error {
 		post.Title,
 		pq.Array(post.Tags),
 		post.ID,
+		post.Version,
 	).Scan(
-		&post.ID,
-		&post.CreatedAt,
-		&post.UpdatedAt,
+		&post.Version,
 	)
 	if err != nil {
-		return err
+		switch {
+		case errors.Is(err, sql.ErrNoRows):
+			return ErrNotFound
+		default:
+			return err
+		}
 	}
 
 	return nil

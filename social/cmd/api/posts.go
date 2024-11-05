@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"errors"
-	"log"
 	"net/http"
 	"strconv"
 
@@ -124,12 +123,11 @@ func (app *application) updatePostHandler(w http.ResponseWriter, r *http.Request
 	if payload.Title != nil {
 		post.Title = *payload.Title
 	}
-	log.Println("pre update post:", post)
+
 	if err := app.store.Posts.Update(r.Context(), post); err != nil {
 		app.internalServerError(w, r, err)
 		return
 	}
-	log.Println("post update post:", post)
 
 	if err := app.jsonResponse(w, http.StatusOK, post); err != nil {
 		app.internalServerError(w, r, err)
