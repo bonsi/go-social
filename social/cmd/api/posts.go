@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"errors"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -125,7 +126,14 @@ func (app *application) updatePostHandler(w http.ResponseWriter, r *http.Request
 	}
 
 	if err := app.store.Posts.Update(r.Context(), post); err != nil {
-		app.internalServerError(w, r, err)
+		// we could and should switch on the returned error here:
+		// we should return a HTTP 409 in case we're getting a "row not found"
+		switch {
+		case errors.Is(err, store.ErrNotFound):
+			app.conflictError(w, r, err)
+		default:
+			app.internalServerError(w, r, err)
+		}
 		return
 	}
 

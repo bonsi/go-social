@@ -1,5 +1,34 @@
 # Backend Engineering with Go
 
+- <https://www.udemy.com/course/backend-engineering-with-go/>
+- <https://gitlab.com/bonsi/backend-engineering-with-go>
+
+## Project info
+
+- API with Postgres database
+
+- Postgres 16 (postgres/password)
+- Docker Compose
+- Air (local, not via docker)
+- mprocs to run services during development
+- direnv
+- Insomnia
+
+- <http://localhost:8888>
+- Health check:
+
+  - <http://localhost:8888/v1/health>
+
+  ```sh
+  curl -v http://localhost:8888/v1/health
+  ```
+
+- Posts:
+
+  - Create:
+
+    - <http://localhost:8888/v1/posts>
+
 ## Section 1: Introduction
 
 ### 1. Project Overview
@@ -213,3 +242,8 @@ make migration add_version_to_posts
 # ...
 make migrate-up
 ```
+
+- also added `app.conflictError`, which returns HTTP 409, to inform the user
+  of a version conflict while trying to update a post
+- see `./social/scripts/test_concurrency.go` for the code used to test this
+  error
