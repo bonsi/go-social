@@ -247,3 +247,5 @@ make migrate-up
   of a version conflict while trying to update a post
 - see `./social/scripts/test_concurrency.go` for the code used to test this
   error
+
+### 31. Managing SQL Query Timeouts
