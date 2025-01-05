@@ -249,3 +249,30 @@ make migrate-up
   error
 
 ### 31. Managing SQL Query Timeouts
+
+### 32. Database Seeding
+
+```sh
+make seed
+
+2025/01/06 00:03:33 pq: SSL is not enabled on the server
+exit status 1
+make: *** [Makefile:19: seed] Error 1
+```
+
+- the instructor advised to remove the double quotes around DB_ADDR in `.envrc`
+
+- the instructor made some booboos in `seed.go` by picking values from the wrong
+  slices. Fixed that.
+- also added a new Makefile command `make migrate-drop` to drop the whole database
+
+### 33. Database Seeding: "SSL not enabled" problem
+
+Some students are getting the "SSL not enabled" problem.
+
+Here are some common solutions to that problem:
+
+1. Remove the surrounding quotes from your .envrc variables.
+2. Make sure add the ?sslmode=disable at the end of the connection string.
+3. Docker image of postgres is conflicting with an older one -> Delete volumes
+   and containers.
