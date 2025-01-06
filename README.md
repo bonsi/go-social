@@ -276,3 +276,5 @@ Here are some common solutions to that problem:
 2. Make sure add the ?sslmode=disable at the end of the connection string.
 3. Docker image of postgres is conflicting with an older one -> Delete volumes
    and containers.
+
+### Assignment 1: Challenge: Create Comments for Posts
