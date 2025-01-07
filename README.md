@@ -278,3 +278,7 @@ Here are some common solutions to that problem:
    and containers.
 
 ### Assignment 1: Challenge: Create Comments for Posts
+
+## Section 7: User Feed
+
+### 34. Creating the User Profile
