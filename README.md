@@ -282,3 +282,13 @@ Here are some common solutions to that problem:
 ## Section 7: User Feed
 
 ### 34. Creating the User Profile
+
+### 35. Adding Followers
+
+```sh
+make migration add_followers_table
+
+# ...
+
+make migrate-up
+```
