@@ -326,3 +326,5 @@ make migration add_indexes
 
 make migrate-up
 ```
+
+### 37. User Feed Algorithm

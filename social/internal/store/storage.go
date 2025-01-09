@@ -25,6 +25,7 @@ type Storage struct {
 	Posts interface {
 		Create(context.Context, *Post) error
 		GetByID(context.Context, int64) (*Post, error)
+		GetUserFeed(context.Context, int64) ([]PostWithMetadata, error)
 		DeleteByID(context.Context, int64) error
 		Update(context.Context, *Post) error
 	}
@@ -36,6 +37,7 @@ type Storage struct {
 
 func NewPostgresStorage(db *sql.DB) Storage {
 	return Storage{
+
 		Comments:  &PostgresCommentStore{db},
 		Followers: &PostgresFollowerStore{db},
 		Posts:     &PostgresPostStore{db},
