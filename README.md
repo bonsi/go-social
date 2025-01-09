@@ -292,3 +292,37 @@ make migration add_followers_table
 
 make migrate-up
 ```
+
+### 36. SQL Indexes
+
+- <https://niallburkley.com/blog/index-columns-for-like-in-postgres/>
+- <https://www.postgresql.org/docs/13/indexes-intro.html>
+- <https://www.postgresql.org/docs/9.5/pgtrgm.html>
+
+```sql
+-- to get the read time
+EXPLAIN ANALYSE SELECT * FROM comments WHERE content ILIKE '%post%';
+
+-- the comment search query
+SELECT * FROM comments WHERE content like ILIKE '%post%';
+
+-- inserting many rows
+do $$
+begin
+for r in 1..100000 loop
+INSERT INTO comment (post_id, user_id, content) VALUES (749, 400, 'Super duper OMG ... So cool COOL!');
+end loop;
+end;
+$$;
+
+-- the index to increase read speed at the expense of write speed (faster reads, slower writes)
+CREATE INDEX idx_comments_content ON comments USING gin (content gin_trgm_ops);
+```
+
+```sh
+make migration add_indexes
+
+# ...
+
+make migrate-up
+```
