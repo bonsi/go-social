@@ -328,3 +328,19 @@ make migrate-up
 ```
 
 ### 37. User Feed Algorithm
+
+---
+
+---
+
+IB: Somwhere during following this course, a new section was added:
+Section 3: Mini Course: Advanced Go
+(Already did those lectures in the other course: "Complete Microservices with Go")
+
+Therefore, the section and lecture numbers jump ahead from this point on
+
+---
+
+## Section 9: Filtering, Sorting, and Pagination
+
+### 51. Pagination and Sorting

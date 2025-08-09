@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"fmt"
 
 	"github.com/lib/pq"
 )
@@ -30,8 +31,19 @@ type PostgresPostStore struct {
 	db *sql.DB
 }
 
-func (s *PostgresPostStore) GetUserFeed(ctx context.Context, userID int64) ([]PostWithMetadata, error) {
-	query := `
+func (s *PostgresPostStore) GetUserFeed(ctx context.Context, userID int64, pfq PaginatedFeedQuery) ([]PostWithMetadata, error) {
+
+	sortDir := "DESC"
+	if pfq.Sort == "asc" {
+		sortDir = "ASC"
+	} else if pfq.Sort == "desc" {
+		sortDir = "DESC"
+	} else {
+		// fallback or error
+		sortDir = "DESC"
+	}
+
+	query := fmt.Sprintf(`
 		SELECT
 			p.id, p.user_id, p.title, p.content, p.created_at, p.version, p.tags,
 			u.username,
@@ -42,13 +54,17 @@ func (s *PostgresPostStore) GetUserFeed(ctx context.Context, userID int64) ([]Po
 		JOIN followers f ON f.follower_id = p.user_id OR p.user_id = $1
 		WHERE f.user_id = $1 OR p.user_id = $1
 		GROUP BY p.id, u.username
-		ORDER BY p.created_at DESC
-	`
+		ORDER BY p.created_at %s
+		LIMIT $2 OFFSET $3
+	`, sortDir)
+
+	// fmt.Println("Query params - userID = ", userID, " limit = ", pfq.Limit, " offset = ", pfq.Offset)
+	// fmt.Println("query", query)
 
 	ctx, cancel := context.WithTimeout(ctx, QueryTimeoutDuration)
 	defer cancel()
 
-	rows, err := s.db.QueryContext(ctx, query, userID)
+	rows, err := s.db.QueryContext(ctx, query, userID, pfq.Limit, pfq.Offset)
 	if err != nil {
 		return nil, err
 	}
