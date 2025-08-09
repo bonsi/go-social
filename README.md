@@ -346,3 +346,27 @@ Therefore, the section and lecture numbers jump ahead from this point on
 ### 51. Pagination and Sorting
 
 ### 52. Feed Filtering
+
+## Section 10: Documentation
+
+### 53. Windows problems when generating swagger docs
+
+### 54. Auto Generating Docs for the API
+
+- <https://github.com/swaggo/swag?tab=readme-ov-file>
+- <https://github.com/swaggo/http-swagger>
+
+```sh
+go install github.com/swaggo/swag/cmd/swag@latest
+
+swag init
+
+go get -u github.com/swaggo/http-swagger
+```
+
+```sh
+make gen-docs
+```
+
+- <http://localhost:8888/v1/swagger/index.html>
+- docs will be auto-generated through the Air pre-cmd
