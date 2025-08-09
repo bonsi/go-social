@@ -33,17 +33,7 @@ type PostgresPostStore struct {
 
 func (s *PostgresPostStore) GetUserFeed(ctx context.Context, userID int64, pfq PaginatedFeedQuery) ([]PostWithMetadata, error) {
 
-	sortDir := "DESC"
-	if pfq.Sort == "asc" {
-		sortDir = "ASC"
-	} else if pfq.Sort == "desc" {
-		sortDir = "DESC"
-	} else {
-		// fallback or error
-		sortDir = "DESC"
-	}
-
-	query := fmt.Sprintf(`
+	query := `
 		SELECT
 			p.id, p.user_id, p.title, p.content, p.created_at, p.version, p.tags,
 			u.username,
@@ -52,19 +42,22 @@ func (s *PostgresPostStore) GetUserFeed(ctx context.Context, userID int64, pfq P
 		LEFT JOIN comments c ON c.post_id = p.id
 		LEFT JOIN users u ON p.user_id = u.id
 		JOIN followers f ON f.follower_id = p.user_id OR p.user_id = $1
-		WHERE f.user_id = $1 OR p.user_id = $1
+		WHERE
+			f.user_id = $1 AND
+			(p.title ILIKE '%' || $4 || '%' OR p.content ILIKE '%' || $4 || '%') AND
+			(p.tags @> $5 OR $5 = '{}')
 		GROUP BY p.id, u.username
-		ORDER BY p.created_at %s
+		ORDER BY p.created_at ` + pfq.Sort + `
 		LIMIT $2 OFFSET $3
-	`, sortDir)
+	`
 
-	// fmt.Println("Query params - userID = ", userID, " limit = ", pfq.Limit, " offset = ", pfq.Offset)
-	// fmt.Println("query", query)
+	fmt.Printf("Query: %s", query)
+	fmt.Printf("Args: userID=%v, limit=%v, offset=%v, search=%v", userID, pfq.Limit, pfq.Offset, pfq.Search)
 
 	ctx, cancel := context.WithTimeout(ctx, QueryTimeoutDuration)
 	defer cancel()
 
-	rows, err := s.db.QueryContext(ctx, query, userID, pfq.Limit, pfq.Offset)
+	rows, err := s.db.QueryContext(ctx, query, userID, pfq.Limit, pfq.Offset, pfq.Search, pq.Array(pfq.Tags))
 	if err != nil {
 		return nil, err
 	}
