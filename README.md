@@ -372,3 +372,16 @@ make gen-docs
 - docs will be auto-generated through the Air pre-cmd
 
 ### 55. Documenting the Handlers
+
+## Section 11: Structured logging
+
+### 56. Adding a Logger
+
+- <https://pkg.go.dev/go.uber.org/zap#section-readme>
+
+```sh
+cd ./social/
+
+go get -u go.uber.org/zap
+
+```
