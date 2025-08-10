@@ -370,3 +370,5 @@ make gen-docs
 
 - <http://localhost:8888/v1/swagger/index.html>
 - docs will be auto-generated through the Air pre-cmd
+
+### 55. Documenting the Handlers
