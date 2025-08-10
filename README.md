@@ -383,5 +383,20 @@ make gen-docs
 cd ./social/
 
 go get -u go.uber.org/zap
+```
 
+## Section 12: User creation
+
+### 57. User Registration Overview
+
+```sh
+cd ./social/
+
+make migration add_invitation
+
+make migration add_activated_to_user
+```
+
+```sh
+make migrate-up
 ```
