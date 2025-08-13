@@ -3,8 +3,15 @@ package store
 import (
 	"context"
 	"database/sql"
+	"errors"
+	"time"
 
 	"golang.org/x/crypto/bcrypt"
+)
+
+var (
+	ErrDuplicateEmail    = errors.New("a user with that email already exists")
+	ErrDuplicateUsername = errors.New("a user with that username already exists")
 )
 
 type User struct {
@@ -36,7 +43,7 @@ type PostgresUserStore struct {
 	db *sql.DB
 }
 
-func (s *PostgresUserStore) Create(ctx context.Context, user *User) error {
+func (s *PostgresUserStore) Create(ctx context.Context, tx *sql.Tx, user *User) error {
 	query := `
 		INSERT INTO users (username, password, email)
 		VALUES ($1, $2, $3)
@@ -56,7 +63,14 @@ func (s *PostgresUserStore) Create(ctx context.Context, user *User) error {
 	)
 
 	if err != nil {
-		return err
+		switch {
+		case err.Error() == `pq: duplicate key value violates unique constraint "users_email_key"`:
+			return ErrDuplicateEmail
+		case err.Error() == `pq: duplicate key value violates unique constraint "users_username_key"`:
+			return ErrDuplicateUsername
+		default:
+			return err
+		}
 	}
 
 	return nil
@@ -91,6 +105,32 @@ func (s *PostgresUserStore) GetByID(ctx context.Context, userID int64) (*User, e
 	return &user, err
 }
 
-func (s *PostgresUserStore) CreateAndInvite(ctx context.Context, user *User, token string) error {
+func (s *PostgresUserStore) CreateAndInvite(ctx context.Context, user *User, token string, invitationExp time.Duration) error {
+	return withTx(s.db, ctx, func(tx *sql.Tx) error {
+		if err := s.Create(ctx, tx, user); err != nil {
+			return err
+		}
+
+		if err := s.createUserInvitation(ctx, tx, token, invitationExp, user.ID); err != nil {
+			return err
+		}
+		return nil
+	})
+}
+
+func (s *PostgresUserStore) createUserInvitation(ctx context.Context, tx *sql.Tx, token string, exp time.Duration, userID int64) error {
+	query := `
+		INSERT INTO user_invitations (token, user_id, expiry)
+		VALUES ($1, $2, $3)
+	`
+
+	ctx, cancel := context.WithTimeout(ctx, QueryTimeoutDuration)
+	defer cancel()
+
+	_, err := tx.ExecContext(ctx, query, token, userID, time.Now().Add(exp))
+	if err != nil {
+		return err
+	}
+
 	return nil
 }

@@ -30,9 +30,9 @@ type Storage struct {
 		Update(context.Context, *Post) error
 	}
 	Users interface {
-		Create(context.Context, *User) error
+		Create(context.Context, *sql.Tx, *User) error
 		GetByID(context.Context, int64) (*User, error)
-		CreateAndInvite(ctx context.Context, user *User, token string) error
+		CreateAndInvite(ctx context.Context, user *User, token string, exp time.Duration) error
 	}
 }
 
@@ -44,4 +44,18 @@ func NewPostgresStorage(db *sql.DB) Storage {
 		Posts:     &PostgresPostStore{db},
 		Users:     &PostgresUserStore{db},
 	}
+}
+
+func withTx(db *sql.DB, ctx context.Context, fn func(*sql.Tx) error) error {
+	tx, err := db.BeginTx(ctx, nil)
+	if err != nil {
+		return err
+	}
+
+	if err := fn(tx); err != nil {
+		_ = tx.Rollback()
+		return err
+	}
+
+	return tx.Commit()
 }

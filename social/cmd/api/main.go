@@ -1,6 +1,8 @@
 package main
 
 import (
+	"time"
+
 	"go.uber.org/zap"
 
 	"github.com/bonsi/social/internal/db"
@@ -38,6 +40,9 @@ func main() {
 			maxIdleTime:  env.GetString("DB_MAX_IDLE_TIME", "15m"),
 		},
 		env: env.GetString("ENV", "development"),
+		mail: mailConfig{
+			exp: time.Hour * 24 * 1,
+		},
 	}
 
 	// Logger

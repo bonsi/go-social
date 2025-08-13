@@ -400,3 +400,13 @@ make migration add_activated_to_user
 ```sh
 make migrate-up
 ```
+
+### 58. SQL Transactions
+
+```sh
+make migration add_expiry_to_invitations
+
+# ...
+
+make migrate-up
+```

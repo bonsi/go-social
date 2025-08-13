@@ -18,6 +18,11 @@ type application struct {
 	config config
 	store  store.Storage
 	logger *zap.SugaredLogger
+	// mail   mailConfig
+}
+
+type mailConfig struct {
+	exp time.Duration
 }
 
 type config struct {
@@ -25,6 +30,7 @@ type config struct {
 	db     dbConfig
 	env    string
 	apiURL string
+	mail   mailConfig
 }
 
 type dbConfig struct {
