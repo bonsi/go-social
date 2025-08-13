@@ -412,3 +412,19 @@ make migrate-up
 ```
 
 ### 59. User Activation
+
+## Section 13: Sending emails
+
+### 60. Sending the Invitation Email
+
+- <https://gobyexample.com/embed-directive>
+- <https://www.digitalocean.com/community/tutorials/how-to-use-templates-in-go>
+
+- I created a SendGrid account (owned by Twilio now apparantly) but got locked
+  out or whatever. Don't care, switching to MailTrap in the next lecture
+
+- after adding new env vars:
+
+```sh
+direnv allow .
+```

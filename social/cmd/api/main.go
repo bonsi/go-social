@@ -7,6 +7,7 @@ import (
 
 	"github.com/bonsi/social/internal/db"
 	"github.com/bonsi/social/internal/env"
+	"github.com/bonsi/social/internal/mailer"
 	"github.com/bonsi/social/internal/store"
 )
 
@@ -31,8 +32,9 @@ const version = "0.0.2"
 // @description
 func main() {
 	cfg := config{
-		addr:   env.GetString("ADDR", ":8888"),
-		apiURL: env.GetString("EXTERNAL_URL", "localhost:8888"),
+		addr:        env.GetString("ADDR", ":8888"),
+		apiURL:      env.GetString("EXTERNAL_URL", "localhost:8888"),
+		frontendURL: env.GetString("FRONTEND_URL", "http://localhost:4000"),
 		db: dbConfig{
 			addr:         env.GetString("DB_ADDR", "postgres://postgres:password@localhost/socialnetwork?sslmode=disable"),
 			maxOpenConns: env.GetInt("DB_NAX_OPEN_CONNS", 30),
@@ -41,7 +43,11 @@ func main() {
 		},
 		env: env.GetString("ENV", "development"),
 		mail: mailConfig{
-			exp: time.Hour * 24 * 1,
+			exp:       time.Hour * 24 * 1,
+			fromEmail: env.GetString("FROM_EMAIL", ""),
+			sendGrid: sendGridConfig{
+				apiKey: env.GetString("API_KEY", ""),
+			},
 		},
 	}
 
@@ -64,10 +70,13 @@ func main() {
 
 	store := store.NewPostgresStorage(db)
 
+	mailer := mailer.NewSendGrid(cfg.mail.sendGrid.apiKey, cfg.mail.fromEmail)
+
 	app := &application{
 		config: cfg,
 		store:  store,
 		logger: logger,
+		mailer: mailer,
 	}
 
 	mux := app.mount()
