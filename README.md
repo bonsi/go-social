@@ -428,3 +428,5 @@ make migrate-up
 ```sh
 direnv allow .
 ```
+
+### 61. (Optional) Sending Emails using MailTrap

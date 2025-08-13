@@ -99,7 +99,7 @@ func (app *application) registerUserHandler(w http.ResponseWriter, r *http.Reque
 	app.logger.Errorw("registerUserHandler: user.ID is not set, right? - %v", "error", user)
 
 	// mail
-	err = app.mailer.Send(mailer.UserInvitationTemplate, user.Username, user.Email, vars, !isProdEnv)
+	_, err = app.mailer.Send(mailer.UserInvitationTemplate, user.Username, user.Email, vars, !isProdEnv)
 	if err != nil {
 		app.logger.Errorw("error sending invitation email", "error", err)
 
