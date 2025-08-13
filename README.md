@@ -410,3 +410,5 @@ make migration add_expiry_to_invitations
 
 make migrate-up
 ```
+
+### 59. User Activation
