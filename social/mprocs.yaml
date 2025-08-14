@@ -4,3 +4,5 @@ procs:
     autostart: true
   air:
     shell: "sleep 2 && air"
+  frontend:
+    shell: "cd ./web/ && sleep 5 && npm run dev"

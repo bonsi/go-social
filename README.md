@@ -432,3 +432,24 @@ direnv allow .
 ### 61. (Optional) Sending Emails using MailTrap
 
 ### 62. Improving Further the Email
+
+### 63. Extra: Building the Confirmation UI
+
+```sh
+cd ./web/
+
+npm create vite@latest . -- --template react-ts
+
+npm i
+
+npm install react-router-dom
+
+```
+
+- `cd ./web/ && npm run dev`
+- <http://localhost:5173/>
+- <http://localhost:5173/confirm/TOKEN>
+
+```sh
+go get github.com/go-chi/cors
+```
