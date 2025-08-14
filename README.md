@@ -453,3 +453,9 @@ npm install react-router-dom
 ```sh
 go get github.com/go-chi/cors
 ```
+
+## Section 14: Authentication
+
+### 64. Authentication Overview
+
+### 65. Basic Authentication
