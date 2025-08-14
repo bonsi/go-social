@@ -99,7 +99,7 @@ func (app *application) registerUserHandler(w http.ResponseWriter, r *http.Reque
 	app.logger.Errorw("registerUserHandler: user.ID is not set, right? - %v", "error", user)
 
 	// mail
-	_, err = app.mailer.Send(mailer.UserInvitationTemplate, user.Username, user.Email, vars, !isProdEnv)
+	status, err := app.mailer.Send(mailer.UserInvitationTemplate, user.Username, user.Email, vars, !isProdEnv)
 	if err != nil {
 		app.logger.Errorw("error sending invitation email", "error", err)
 
@@ -112,6 +112,8 @@ func (app *application) registerUserHandler(w http.ResponseWriter, r *http.Reque
 		app.internalServerError(w, r, err)
 		return
 	}
+
+	app.logger.Infow("Email sent", "status code", status)
 
 	if err := app.jsonResponse(w, http.StatusCreated, userWithToken); err != nil {
 		app.internalServerError(w, r, err)
