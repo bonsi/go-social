@@ -459,3 +459,22 @@ go get github.com/go-chi/cors
 ### 64. Authentication Overview
 
 ### 65. Basic Authentication
+
+### 66. Generating Tokens
+
+```sh
+curl -X 'POST' \
+  'http://localhost:8888/v1/authentication/token' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "email": "test2@example.com",
+  "password": "secret"
+}'
+
+> {
+>  "data": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnb3BoZXJzb2NpYWwiLCJleHAiOjE3NTU1MDEyMDksImlhdCI6MTc1NTI0MjAwOSwiaXNzIjoiZ29waGVyc29jaWFsIiwibmJmIjoxNzU1MjQyMDA5LCJzdWIiOjEwMn0.5fF6j-KRWlgcGwa2qhd7JUuHqSPFnfO8HabvtVof2dM"
+> }
+```
+
+- we can see the contents of the token by pasting it here: <https://www.jwt.io/>
