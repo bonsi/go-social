@@ -478,3 +478,5 @@ curl -X 'POST' \
 ```
 
 - we can see the contents of the token by pasting it here: <https://www.jwt.io/>
+
+### 67. Validating Tokens

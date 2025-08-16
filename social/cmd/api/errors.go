@@ -4,7 +4,7 @@ import (
 	"net/http"
 )
 
-func (app *application) SOMEunauthorizedError(w http.ResponseWriter, r *http.Request, err error) {
+func (app *application) unauthorizedError(w http.ResponseWriter, r *http.Request, err error) {
 	app.logger.Warnf("unauthorized error",
 		"method", r.Method,
 		"path", r.URL.Path,
