@@ -480,3 +480,22 @@ curl -X 'POST' \
 - we can see the contents of the token by pasting it here: <https://www.jwt.io/>
 
 ### 67. Validating Tokens
+
+## Section 15: Authorization
+
+### 68. Authorization Overview
+
+### 69. Authorization Database Setup
+
+```sh
+make migration add_roles_table
+
+make migration alter_users_with_roles
+```
+
+```sh
+make migrate-up
+```
+
+- the seeding did not work anymore because of the added role_id to the users
+  table. So I added it to the model, the seed method, et voila.
