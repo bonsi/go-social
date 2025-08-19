@@ -118,7 +118,7 @@ func generateUsers(num int) []*store.User {
 			// Role: store.Role{
 			// 	Name: "user",
 			// }
-			Role: 1,
+			RoleID: 1,
 		}
 		user.Password.Set("password")
 		users[i] = user

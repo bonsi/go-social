@@ -499,3 +499,5 @@ make migrate-up
 
 - the seeding did not work anymore because of the added role_id to the users
   table. So I added it to the model, the seed method, et voila.
+
+### 70. Role Precedence Middleware

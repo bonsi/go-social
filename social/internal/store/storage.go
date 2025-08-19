@@ -29,6 +29,9 @@ type Storage struct {
 		DeleteByID(context.Context, int64) error
 		Update(context.Context, *Post) error
 	}
+	Roles interface {
+		GetByName(context.Context, string) (*Role, error)
+	}
 	Users interface {
 		Activate(context.Context, string) error
 		Create(context.Context, *sql.Tx, *User) error
@@ -45,6 +48,7 @@ func NewPostgresStorage(db *sql.DB) Storage {
 		Comments:  &PostgresCommentStore{db},
 		Followers: &PostgresFollowerStore{db},
 		Posts:     &PostgresPostStore{db},
+		Roles:     &PostgresRoleStore{db},
 		Users:     &PostgresUserStore{db},
 	}
 }
