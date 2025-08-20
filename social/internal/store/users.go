@@ -90,10 +90,11 @@ func (s *PostgresUserStore) Create(ctx context.Context, tx *sql.Tx, user *User) 
 
 func (s *PostgresUserStore) GetByID(ctx context.Context, userID int64) (*User, error) {
 	query := `
-		SELECT users.id, username, email, password, created_at, roles.*
-		FROM users
-		JOIN roles ON (users.role_id = roles.id)
-		WHERE users.id = $1 AND is_active = true
+		SELECT u.id, u.username, u.email, u.password, u.is_active, u.created_at,
+			r.id, r.name, r.level, r.description
+		FROM users u
+		JOIN roles r ON (u.role_id = r.id)
+		WHERE u.id = $1 AND u.is_active = true
 	`
 	ctx, cancel := context.WithTimeout(ctx, QueryTimeoutDuration)
 	defer cancel()
@@ -104,6 +105,7 @@ func (s *PostgresUserStore) GetByID(ctx context.Context, userID int64) (*User, e
 		&user.Username,
 		&user.Email,
 		&user.Password.hash,
+		&user.IsActive,
 		&user.CreatedAt,
 		&user.Role.ID,
 		&user.Role.Name,
@@ -286,7 +288,7 @@ func (s *PostgresUserStore) deleteUserInvitations(ctx context.Context, tx *sql.T
 
 func (s *PostgresUserStore) GetByEmail(ctx context.Context, email string) (*User, error) {
 	query := `
-		SELECT id, username, email, password, role_id, created_at
+		SELECT id, username, email, password, role_id, is_active, created_at
 		FROM users
 		WHERE email = $1 AND is_active = true
 	`
@@ -300,6 +302,7 @@ func (s *PostgresUserStore) GetByEmail(ctx context.Context, email string) (*User
 		&user.Email,
 		&user.Password.hash,
 		&user.RoleID,
+		&user.IsActive,
 		&user.CreatedAt,
 	)
 	if err != nil {

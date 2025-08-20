@@ -15,6 +15,7 @@ import (
 	"github.com/bonsi/social/internal/auth"
 	"github.com/bonsi/social/internal/mailer"
 	"github.com/bonsi/social/internal/store"
+	"github.com/bonsi/social/internal/store/cache"
 )
 
 type application struct {
@@ -23,6 +24,7 @@ type application struct {
 	logger        *zap.SugaredLogger
 	mailer        mailer.Client
 	authenticator auth.Authenticator
+	cacheStorage  cache.Storage
 }
 
 type mailConfig struct {
@@ -48,6 +50,14 @@ type config struct {
 	mail        mailConfig
 	frontendURL string
 	auth        authConfig
+	redisCfg    redisConfig
+}
+
+type redisConfig struct {
+	addr    string
+	pw      string
+	db      int
+	enabled bool
 }
 
 type authConfig struct {

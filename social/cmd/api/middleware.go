@@ -45,7 +45,7 @@ func (app *application) AuthTokenMiddleware(next http.Handler) http.Handler {
 
 		ctx := r.Context()
 
-		user, err := app.store.Users.GetByID(ctx, userID)
+		user, err := app.getUser(ctx, userID)
 		if err != nil {
 			app.unauthorizedError(w, r, err)
 			return
@@ -128,4 +128,40 @@ func (app *application) checkRolePrecedence(ctx context.Context, user *store.Use
 	}
 
 	return user.Role.Level >= role.Level, nil
+}
+
+func (app *application) getUser(ctx context.Context, userID int64) (*store.User, error) {
+	if !app.config.redisCfg.enabled {
+		return app.store.Users.GetByID(ctx, userID)
+	}
+
+	// app.logger.Infow("cache hit", "key", "user", "id", userID)
+
+	user, err := app.cacheStorage.Users.Get(ctx, userID)
+	// app.logger.Infow("user 1", "user", user)
+	if err != nil {
+		return nil, err
+	}
+
+	if user == nil {
+		// app.logger.Infow("fetching from DB", "id", userID)
+		user, err = app.store.Users.GetByID(ctx, userID)
+
+		// app.logger.Infow("user 2", "user", user)
+		// app.logger.Infow("db result", "user", user, "error", err)
+
+		if err != nil {
+			// app.logger.Infow("WTF, GetByID err!=nil?")
+			return nil, err
+		}
+
+		if err := app.cacheStorage.Users.Set(ctx, user); err != nil {
+			// app.logger.Infow("cache set", "error", err)
+			return nil, err
+		}
+		// app.logger.Infow("user 3", "user", user)
+	}
+	// app.logger.Infow("user 4", "user", user)
+	// app.logger.Infow("getUser returning user", "user", user)
+	return user, nil
 }

@@ -503,3 +503,50 @@ make migrate-up
 ### 70. Role Precedence Middleware
 
 ### 71. Fixing the User Invitation
+
+## Section 16: Redis caching
+
+### 72. Designing for Performance
+
+### 73. Caching the User Profile
+
+```sh
+docker run -d --rm --name social-redis -p 6379:6379 redis:6.2-alpine redis-server
+```
+
+```sh
+go get github.com/go-redis/redis/v8
+```
+
+```sh
+docker ps
+
+> CONTAINER ID   IMAGE                                   COMMAND                  CREATED        STATUS                 PORTS                                         NAMES
+> dc65bc4cca8e   rediscommander/redis-commander:latest   "/usr/bin/dumb-init …"   3 hours ago    Up 3 hours (healthy)   127.0.0.1:8081->8081/tcp                      redis-commander
+> fff9f93d7d87   redis:6.2-alpine                        "docker-entrypoint.s…"   3 hours ago    Up 3 hours             0.0.0.0:6379->6379/tcp, [::]:6379->6379/tcp   social-redis
+> 28f88ee5fb3d   postgres:16.3                           "docker-entrypoint.s…"   5 days ago     Up 4 hours             0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp   postgres-db
+
+docker exec -it fff9f redis-cli KEYS "*"
+
+> (empty array)
+```
+
+- get user via Swagger
+
+```sh
+curl -X 'GET' \
+  'http://localhost:8888/v1/users/102' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnb3BoZXJzb2NpYWwiLCJleHAiOjE3NTU5NDc2MDAsImlhdCI6MTc1NTY4ODQwMCwiaXNzIjoiZ29waGVyc29jaWFsIiwibmJmIjoxNzU1Njg4NDAwLCJzdWIiOjEwMn0.uBPYcsvR6wFJ8GR0O6kRNsMhf5wYOL5qsPNxXa7YYO0'
+
+
+docker exec -it fff9f redis-cli GET "user-102"
+# mind the 1 minute cache TTL
+> "{\"id\":102,\"username\":\"test2\",\"email\":\"test2@example.com\",\"created_at\":\"2025-08-19T21:36:49Z\",\"is_active\":false,\"role_id\":0,\"role\":{\"id\":3,\"name\":\"admin\",\"description\":\"An admin can update and delete other users posts\",\"level\":3}}"
+```
+
+- stress testing:
+
+```sh
+npx autocannon http://localhost:8888/v1/users/100 --connections 10 --duration 5 -H "Authorization: Bearer <INSERT TOKEN>"
+```

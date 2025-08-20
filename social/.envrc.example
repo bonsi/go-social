@@ -3,3 +3,5 @@ export DB_ADDR="postgres://USERNAME:PASSWORD@HOST/DBNAME?sslmode=disable"
 export FROM_EMAIL=""
 export SENDGRID_API_KEY=""
 export MAILTRAP_API_KEY=""
+export REDIS_ENABLED=false
+
