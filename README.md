@@ -501,3 +501,5 @@ make migrate-up
   table. So I added it to the model, the seed method, et voila.
 
 ### 70. Role Precedence Middleware
+
+### 71. Fixing the User Invitation
