@@ -14,7 +14,7 @@ services:
       - "5432:5432"
   redis:
     image: redis:6.2-alpine
-    restart: unless-stopped
+    # restart: unless-stopped
     container_name: social-redis
     ports:
       - "6379:6379"
@@ -29,6 +29,6 @@ services:
       - "127.0.0.1:8081:8081"
     depends_on:
       - redis
-    restart: unless-stopped
+      # restart: unless-stopped
 volumes:
   db-data:

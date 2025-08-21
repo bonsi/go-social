@@ -550,3 +550,17 @@ docker exec -it fff9f redis-cli GET "user-102"
 ```sh
 npx autocannon http://localhost:8888/v1/users/100 --connections 10 --duration 5 -H "Authorization: Bearer <INSERT TOKEN>"
 ```
+
+## Section 17: Testing
+
+### 74. Testing Overview
+
+### 75. Testing the User Handler
+
+```sh
+cd ./social/
+
+go test -v ./...
+
+make test
+```
