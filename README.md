@@ -596,3 +596,12 @@ npx autocannon -r 4000 -d 2 -c 10 --renderStatusCodes http://localhost:8888/v1/h
 ### 80. Basic Server Metrics
 
 - <http://localhost:8888/v1/debug/vars>
+
+## Section 22: Automation (CI/CD)
+
+### 81. Continuous Integration
+
+```sh
+git remote set-url --add --push origin git@github.com:bonsi/go-social.git
+
+```
