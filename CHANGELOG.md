@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.1.1](https://github.com/bonsi/go-social/compare/v1.1.0...v1.1.1) (2025-08-22)
+
+
+### Bug Fixes
+
+* another another ([e5d4080](https://github.com/bonsi/go-social/commit/e5d40807a66559d458d05563d922064fe0b79842))
+* another attempt to fix the version number extraction ([14ec045](https://github.com/bonsi/go-social/commit/14ec0453a2ba5300e5908cc2a96f29c762934d06))
+* fix wrong version string ([aab3374](https://github.com/bonsi/go-social/commit/aab3374bf036276f2b13652c9acb0739d7995bad))
+* now really fixed it ([f3514db](https://github.com/bonsi/go-social/commit/f3514dbc0c61cad79bd60539a57f57e21ddd8e1a))
+* remove [ ([06a28a6](https://github.com/bonsi/go-social/commit/06a28a6ad6920f70ca27a0a30435df57011a621f))
+
 ## [1.1.0](https://github.com/bonsi/go-social/compare/v1.0.0...v1.1.0) (2025-08-22)
 
 
