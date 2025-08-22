@@ -17,7 +17,7 @@ import (
 	"github.com/bonsi/social/internal/store/cache"
 )
 
-const version = ""
+const version = "1.0.0"
 
 //	@title			GopherSocial API
 //	@description	API for GopherSocial, a social network for gophers
