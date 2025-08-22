@@ -7,9 +7,9 @@ import (
 	"github.com/bonsi/social/internal/store"
 )
 
-type commentKey string
+// type commentKey string
 
-const commentCtx commentKey = "comment"
+// const commentCtx commentKey = "comment"
 
 type CreateCommentPayload struct {
 	Content string `json:"content" validate:"required,max=100"`
