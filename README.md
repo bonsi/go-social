@@ -585,5 +585,8 @@ cd ./social/
 npx autocannon -r 22 -d 1 -c 1 --renderStatusCodes http://localhost:8888/v1/health
 
 npx autocannon -r 4000 -d 2 -c 10 --renderStatusCodes http://localhost:8888/v1/health
-
 ```
+
+## Section 20: Handling CORS
+
+### 79. Handling CORS errors

@@ -6,5 +6,6 @@ export MAILTRAP_API_KEY=""
 export REDIS_ENABLED=false
 export RATELIMITER_REQUESTS_COUNT=20
 export RATELIMITER_ENABLED=true
+export CORS_ALLOWED_ORIGIN=http://localhost:5174
 
 

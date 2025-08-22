@@ -18,6 +18,7 @@ import (
 
 	"github.com/bonsi/social/docs" // This is required to generate swagger docs
 	"github.com/bonsi/social/internal/auth"
+	"github.com/bonsi/social/internal/env"
 	"github.com/bonsi/social/internal/mailer"
 	"github.com/bonsi/social/internal/ratelimiter"
 	"github.com/bonsi/social/internal/store"
@@ -94,19 +95,18 @@ type dbConfig struct {
 func (app *application) mount() http.Handler {
 	r := chi.NewRouter()
 
+	r.Use(middleware.RequestID)
+	r.Use(middleware.RealIP)
+	r.Use(middleware.Logger)
+	r.Use(middleware.Recoverer)
 	r.Use(cors.Handler(cors.Options{
-		AllowedOrigins:   []string{"https://*", "http://*"},
+		AllowedOrigins:   []string{env.GetString("CORS_ALLOWED_ORIGIN", "http://localhost:5174")},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
 		ExposedHeaders:   []string{"Link"},
 		AllowCredentials: false,
 		MaxAge:           300, // Maximum value not ignored by any of major browsers
 	}))
-
-	r.Use(middleware.Recoverer)
-	r.Use(middleware.RealIP)
-	r.Use(middleware.Logger)
-	r.Use(middleware.RequestID)
 	r.Use(app.RateLimiterMiddleware)
 
 	// Set a timeout value on the request  context (ctx), that will signal
