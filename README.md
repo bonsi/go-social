@@ -604,3 +604,7 @@ npx autocannon -r 4000 -d 2 -c 10 --renderStatusCodes http://localhost:8888/v1/h
 ```sh
 git remote set-url --add --push origin git@github.com:bonsi/go-social.git
 ```
+
+### 82. Changelog
+
+- <https://www.conventionalcommits.org/en/v1.0.0/>
