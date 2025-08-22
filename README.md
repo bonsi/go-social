@@ -608,3 +608,7 @@ git remote set-url --add --push origin git@github.com:bonsi/go-social.git
 ### 82. Changelog
 
 - <https://www.conventionalcommits.org/en/v1.0.0/>
+
+- since Release Please creates a new file in the repo (`CHANGELOG.md`) and I
+  have the github repo as a secondary remote (push only), `git pull` will not
+  pull in those changes. Use `git pull git@github.com:bonsi/go-social.git`
