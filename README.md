@@ -572,3 +572,18 @@ make test
 ## Section 18: Graceful shutdown
 
 ### 77. Graceful Server Shutdown
+
+## Section 19: Rate limiting
+
+### 78. Rate Limiting our API
+
+- <https://www.youtube.com/watch?v=m5oyY9fgZPs&t=579s>
+
+```sh
+cd ./social/
+
+npx autocannon -r 22 -d 1 -c 1 --renderStatusCodes http://localhost:8888/v1/health
+
+npx autocannon -r 4000 -d 2 -c 10 --renderStatusCodes http://localhost:8888/v1/health
+
+```

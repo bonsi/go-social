@@ -4,4 +4,7 @@ export FROM_EMAIL=""
 export SENDGRID_API_KEY=""
 export MAILTRAP_API_KEY=""
 export REDIS_ENABLED=false
+export RATELIMITER_REQUESTS_COUNT=20
+export RATELIMITER_ENABLED=true
+
 

@@ -19,6 +19,7 @@ import (
 	"github.com/bonsi/social/docs" // This is required to generate swagger docs
 	"github.com/bonsi/social/internal/auth"
 	"github.com/bonsi/social/internal/mailer"
+	"github.com/bonsi/social/internal/ratelimiter"
 	"github.com/bonsi/social/internal/store"
 	"github.com/bonsi/social/internal/store/cache"
 )
@@ -30,6 +31,7 @@ type application struct {
 	mailer        mailer.Client
 	authenticator auth.Authenticator
 	cacheStorage  cache.Storage
+	rateLimiter   ratelimiter.Limiter
 }
 
 type mailConfig struct {
@@ -56,6 +58,7 @@ type config struct {
 	frontendURL string
 	auth        authConfig
 	redisCfg    redisConfig
+	rateLimiter ratelimiter.Config
 }
 
 type redisConfig struct {
@@ -101,9 +104,10 @@ func (app *application) mount() http.Handler {
 	}))
 
 	r.Use(middleware.Recoverer)
-	r.Use(middleware.Logger)
 	r.Use(middleware.RealIP)
+	r.Use(middleware.Logger)
 	r.Use(middleware.RequestID)
+	r.Use(app.RateLimiterMiddleware)
 
 	// Set a timeout value on the request  context (ctx), that will signal
 	// through ctx.Done() that the request has timed out and further

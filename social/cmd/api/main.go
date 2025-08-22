@@ -10,6 +10,7 @@ import (
 	"github.com/bonsi/social/internal/db"
 	"github.com/bonsi/social/internal/env"
 	"github.com/bonsi/social/internal/mailer"
+	"github.com/bonsi/social/internal/ratelimiter"
 	"github.com/bonsi/social/internal/store"
 	"github.com/bonsi/social/internal/store/cache"
 )
@@ -72,6 +73,11 @@ func main() {
 			db:      env.GetInt("REDIS_DB", 0),
 			enabled: env.GetBool("REDIS_ENABLED", false),
 		},
+		rateLimiter: ratelimiter.Config{
+			RequestsPerTimeFrame: env.GetInt("RATELIMITER_REQUESTS_COUNT", 20),
+			TimeFrame:            time.Second * 5,
+			Enabled:              env.GetBool("RATELIMITER_ENABLED", true),
+		},
 	}
 
 	// Logger
@@ -98,6 +104,12 @@ func main() {
 		logger.Info("redis cache connection established")
 	}
 
+	// ratelimiter
+	rateLimiter := ratelimiter.NewFixedWindowLimiter(
+		cfg.rateLimiter.RequestsPerTimeFrame,
+		cfg.rateLimiter.TimeFrame,
+	)
+
 	store := store.NewPostgresStorage(db)
 	cacheStorage := cache.NewRedisStorage(rdb)
 
@@ -118,6 +130,7 @@ func main() {
 		mailer:        mailtrap,
 		authenticator: jwtAuthenticator,
 		cacheStorage:  cacheStorage,
+		rateLimiter:   rateLimiter,
 	}
 
 	mux := app.mount()

@@ -8,6 +8,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/bonsi/social/internal/auth"
+	"github.com/bonsi/social/internal/ratelimiter"
 	"github.com/bonsi/social/internal/store"
 	"github.com/bonsi/social/internal/store/cache"
 )
@@ -24,10 +25,10 @@ func newTestApplication(t *testing.T, cfg config) *application {
 	testAuth := &auth.TestAuthenticator{}
 
 	// Rate limiter
-	// rateLimiter := ratelimiter.NewFixedWindowLimiter(
-	// 	cfg.rateLimiter.RequestsPerTimeFrame,
-	// 	cfg.rateLimiter.TimeFrame,
-	// )
+	rateLimiter := ratelimiter.NewFixedWindowLimiter(
+		cfg.rateLimiter.RequestsPerTimeFrame,
+		cfg.rateLimiter.TimeFrame,
+	)
 
 	return &application{
 		logger:        logger,
@@ -35,7 +36,7 @@ func newTestApplication(t *testing.T, cfg config) *application {
 		cacheStorage:  mockCacheStore,
 		authenticator: testAuth,
 		config:        cfg,
-		// rateLimiter:   rateLimiter,
+		rateLimiter:   rateLimiter,
 	}
 }
 
