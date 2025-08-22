@@ -590,3 +590,9 @@ npx autocannon -r 4000 -d 2 -c 10 --renderStatusCodes http://localhost:8888/v1/h
 ## Section 20: Handling CORS
 
 ### 79. Handling CORS errors
+
+## Section 21: Server metrics
+
+### 80. Basic Server Metrics
+
+- <http://localhost:8888/v1/debug/vars>
