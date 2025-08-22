@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.1.0](https://github.com/bonsi/go-social/compare/v1.0.0...v1.1.0) (2025-08-22)
+
+
+### Features
+
+* update api version automatically ([3dc2c11](https://github.com/bonsi/go-social/commit/3dc2c1155ffe117b65f81be0538bd650a14fc594))
+
+
+### Bug Fixes
+
+* fix paths in update-api-version script ([15805af](https://github.com/bonsi/go-social/commit/15805af35a6331563f13a643aa13087397dacfba))
+* fix regex to grep app version ([65e5d18](https://github.com/bonsi/go-social/commit/65e5d18cbbcc5d24f8ff05c90217f81f228ee8ff))
+
 ## 1.0.0 (2025-08-22)
 
 
