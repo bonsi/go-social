@@ -611,4 +611,5 @@ git remote set-url --add --push origin git@github.com:bonsi/go-social.git
 
 - since Release Please creates a new file in the repo (`CHANGELOG.md`) and I
   have the github repo as a secondary remote (push only), `git pull` will not
-  pull in those changes. Use `git pull git@github.com:bonsi/go-social.git`
+  pull in those changes. Use `git pull git@github.com:bonsi/go-social.git` to
+  pull in changes from Githu
