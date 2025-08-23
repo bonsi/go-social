@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/bonsi/go-social/compare/v1.1.1...v1.2.0) (2025-08-23)
+
+
+### Features
+
+* dockerfile ([651b92c](https://github.com/bonsi/go-social/commit/651b92c71360291d9ac34376c50c32c66aeab4c6))
+
 ## [1.1.1](https://github.com/bonsi/go-social/compare/v1.1.0...v1.1.1) (2025-08-22)
 
 
