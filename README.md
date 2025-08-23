@@ -612,4 +612,23 @@ git remote set-url --add --push origin git@github.com:bonsi/go-social.git
 - since Release Please creates a new file in the repo (`CHANGELOG.md`) and I
   have the github repo as a secondary remote (push only), `git pull` will not
   pull in those changes. Use `git pull git@github.com:bonsi/go-social.git` to
-  pull in changes from Githu
+  pull in changes from Github
+
+- had some trouble with the first version extraction, maybe do the bootstrapping
+  of Release Please properly?
+
+## Section 3: Production deployment
+
+### 83. Deploying to Google Cloud
+
+- <https://supabase.com/>
+
+- <https://cloud.google.com>
+- Create a new project "Gopher Social"
+- go to "Cloud Run" (search in the top bar)
+- create service
+- "Continuously deploy from a repository"
+- under "Containers, Volumes, Networking, Security" > Containers > Variables & Secrets,
+  configure all relevant env vars
+- Revision scaling > Maximum number of instances = 3
+- Create
